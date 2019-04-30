@@ -1,1 +1,10 @@
 .DS_Store
+\.venv/
+
+assignments/assignment1/__pycache__/
+
+assignments/assignment1/\.ipynb_checkpoints/
+
+assignments/assignment1/data/test_32x32\.mat
+
+assignments/assignment1/data/train_32x32\.mat
