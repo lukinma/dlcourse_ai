@@ -52,10 +52,15 @@ class KNN:
         num_train = self.train_X.shape[0]
         num_test = X.shape[0]
         dists = np.zeros((num_test, num_train), np.float32)
+        vec_size = X.shape[1]
         for i_test in range(num_test):
             for i_train in range(num_train):
                 # TODO: Fill dists[i_test][i_train]
-                pass
+                for j in range(vec_size):
+                    #TODO: use np.sum(np.abs(binary_test_X[0] - binary_train_X[10]))
+                    dists[i_test][i_train] += abs(X[i_test][j] - self.train_X[i_train][j])
+                # pass
+        return dists
 
     def compute_distances_one_loop(self, X):
         '''
