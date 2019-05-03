@@ -55,8 +55,7 @@ class KNN:
         vec_size = X.shape[1]
         for i_test in range(num_test):
             for i_train in range(num_train):
-                for j in range(vec_size):
-                    dists[i_test][i_train] += abs(X[i_test][j] - self.train_X[i_train][j])
+                dists[i_test][i_train] = np.sum(np.abs(X[i_test] - self.train_X[i_train]))
         return dists
 
     def compute_distances_one_loop(self, X):
