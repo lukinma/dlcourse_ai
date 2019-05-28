@@ -109,11 +109,23 @@ class KNN:
         pred, np array of bool (num_test_samples) - binary predictions 
            for every test sample
         '''
+        
+        print('dists shape: ' + str(dists.shape))
+        print('train_y shape: ' + str(self.train_y.shape))
+        
         num_test = dists.shape[0]
         pred = np.zeros(num_test, np.bool)
         for i in range(num_test):
             # TODO: Implement choosing best class based on k
             # nearest training samples
+            # print('dists[' + str(i) + '] = ' + str(dists[i]))
+            # z = np.row_stack((dists[i], self.train_y))
+            order = np.argsort(dists[i])
+            sorted_y = np.array(self.train_y)[order]
+
+            # traverse through first k of sorted_y
+            # choose the most popular value
+
             pass
         return pred
 
