@@ -1,4 +1,5 @@
 import numpy as np
+import operator
 
 
 class KNN:
@@ -125,8 +126,12 @@ class KNN:
 
             # traverse through first k of sorted_y
             # choose the most popular value
-
-            pass
+            d = {True: 0, False: 0}
+            for j in range(self.k):
+                d[sorted_y[j]] += 1
+            res = max(d.items(), key = operator.itemgetter(1))[0]
+            pred[i] = res
+            # pass
         return pred
 
     def predict_labels_multiclass(self, dists):
