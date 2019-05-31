@@ -152,5 +152,17 @@ class KNN:
         for i in range(num_test):
             # TODO: Implement choosing best class based on k
             # nearest training samples
-            pass
-        return pred
+            order = np.argsort(dists[i])
+            sorted_y = np.array(self.train_y)[order]
+            
+            d = {}
+            
+            for j in range(self.k):
+                if (sorted_y[j] in d):
+                    d[sorted_y[j]] += 1
+                else:
+                    d[sorted_y[j]] = 1
+            
+            res = max(d.items(), key = operator.itemgetter(1))[0]
+            pred[i] = res
+            return pred
