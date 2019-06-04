@@ -111,9 +111,6 @@ class KNN:
            for every test sample
         '''
         
-        print('dists shape: ' + str(dists.shape))
-        print('train_y shape: ' + str(self.train_y.shape))
-        
         num_test = dists.shape[0]
         pred = np.zeros(num_test, np.bool)
         for i in range(num_test):
