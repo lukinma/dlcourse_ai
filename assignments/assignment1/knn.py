@@ -6,6 +6,7 @@ class KNN:
     """
     K-neariest-neighbor classifier using L1 loss
     """
+
     def __init__(self, k=1):
         self.k = k
 
@@ -94,10 +95,10 @@ class KNN:
         num_test = X.shape[0]
         # Using float32 to to save memory - the default is float64
         dists = np.zeros((num_test, num_train), np.float32)
-        f = lambda X :  np.sum(np.abs(X - self.train_X), axis = 1)
+        f = lambda X: np.sum(np.abs(X - self.train_X), axis=1)
         dists = np.apply_along_axis(f, 1, X)
         return dists
-        
+
     def predict_labels_binary(self, dists):
         '''
         Returns model predictions for binary classification case
@@ -110,7 +111,7 @@ class KNN:
         pred, np array of bool (num_test_samples) - binary predictions 
            for every test sample
         '''
-        
+
         num_test = dists.shape[0]
         pred = np.zeros(num_test, np.bool)
         for i in range(num_test):
@@ -126,7 +127,7 @@ class KNN:
             d = {True: 0, False: 0}
             for j in range(self.k):
                 d[sorted_y[j]] += 1
-            res = max(d.items(), key = operator.itemgetter(1))[0]
+            res = max(d.items(), key=operator.itemgetter(1))[0]
             pred[i] = res
             # pass
         return pred
@@ -144,22 +145,22 @@ class KNN:
            for every test sample
         '''
         num_test = dists.shape[0]
-        num_test = dists.shape[0]
         pred = np.zeros(num_test, np.int)
         for i in range(num_test):
             # TODO: Implement choosing best class based on k
             # nearest training samples
             order = np.argsort(dists[i])
             sorted_y = np.array(self.train_y)[order]
-            
+
             d = {}
-            
+
             for j in range(self.k):
-                if (sorted_y[j] in d):
+                if sorted_y[j] in d:
                     d[sorted_y[j]] += 1
                 else:
                     d[sorted_y[j]] = 1
-            
-            res = max(d.items(), key = operator.itemgetter(1))[0]
+
+            res = max(d.items(), key=operator.itemgetter(1))[0]
+            # print('i = ' + str(i) + ' res = ' + str(res))
             pred[i] = res
-            return pred
+        return pred
