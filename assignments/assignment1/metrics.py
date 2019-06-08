@@ -44,5 +44,9 @@ def multiclass_accuracy(prediction, ground_truth):
     '''
     # TODO: Implement computing accuracy
     t = prediction == ground_truth
-    #print(t, sum(t), sum(t)/len(ground_truth))
+    # print('prediction: ' + str(prediction.shape) + ' type: ' + str(type(prediction)))
+    # print('ground' + str(ground_truth.shape) + ' type: ' + str(type(ground_truth)))
+    # print('== type: ' + str(type(prediction == ground_truth)))
+    # print('t = ' + str(t))
+    # print(t, sum(t), sum(t)/len(ground_truth))
     return sum(t)/len(ground_truth)
