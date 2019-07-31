@@ -42,6 +42,23 @@ def cross_entropy_loss(probs, target_index):
     true_vals[target_index] = 1
     res = np.sum(true_vals*np.log(probs))
     return res
+    
+    
+def dSk_dyk(y, k):
+    s_k =  np.exp(y[k]) / np.sum(np.exp(y))
+    return s_k - s_k**2
+    
+    
+def dSi_dyk(y, i, k):
+    s = lambda y, k: np.exp(y[k]) / np.sum(np.exp(y))
+    s_k = s(y, k)
+    s_i = s(y, i)
+    return s_i * s_k
+    
+    
+def softmax_with_gradient(y):
+    s = softmax(y)
+    return s, s - np.square(s)
 
 
 def softmax_with_cross_entropy(predictions, target_index):
@@ -61,8 +78,12 @@ def softmax_with_cross_entropy(predictions, target_index):
     '''
     # TODO implement softmax with cross-entropy
     # Your final implementation shouldn't have any loops
-    raise Exception("Not implemented!")
-
+    
+    #predictions is an array of 'y'
+    
+    sf = softmax(predictions)
+    loss = cross_entropy_loss(sf, target_index)
+    
     return loss, dprediction
 
 
