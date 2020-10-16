@@ -16,7 +16,6 @@ def softmax(predictions):
     # TODO implement softmax
     # Your final implementation shouldn't have any loops
 
-    print(predictions.shape)
     predictions -= np.max(predictions)
     ei = np.exp(predictions)
     denominator = np.sum(ei)
@@ -41,16 +40,14 @@ def cross_entropy_loss(probs, target_index):
     # TODO implement cross-entropy
     # Your final implementation shouldn't have any loops
     true_vals = np.zeros(probs.shape)
-    # print('true_vals: ', true_vals, 'shape: ', true_vals.shape)
-    # print('probs', probs)
-    # print('target_index', target_index, 'shape', target_index.shape)
-    # print("t ", true_vals[(0, 0)], true_vals[(0, 1)])
-    for i in range(len(target_index)):
-        true_vals[(i, target_index)] = 1
-    # true_vals[target_index] = 1
-    res = np.sum(true_vals*np.log(probs))
-    print('true_vals:', true_vals)
-    print('cross_entropy_loss: ', res)
+    if isinstance(target_index, int):
+        true_vals[target_index] = 1
+    else:
+        ti = target_index
+        for i in range(len(ti)):
+            true_vals[(i, ti)] = 1
+    res = -np.sum(true_vals*np.log(probs))
+    # print('cross_entropy_loss: ', res)
     return res
     
     
@@ -90,20 +87,21 @@ def softmax_with_cross_entropy(predictions, target_index):
     # Your final implementation shouldn't have any loops
     
     #predictions is an array of 'y'
-    single = (predictions.ndim == 1)
+    p = predictions.copy()
+    single = (p.ndim == 1)
     if single:
-        predictions = predictions.reshape(1, predictions.shape[0])
+        p = p.reshape(1, predictions.shape[0])
         target_index = np.array([target_index])
     
-    sf = softmax(predictions)                       # S
-    # print('predictions: ', predictions)
+    sf = softmax(p)                       # S
+    # print('predictions (x): ', predictions)
     # print('softmax: ', sf)
     # print('target_index: ', target_index)
     loss = cross_entropy_loss(sf, target_index)     # L
 
     indicator = np.zeros(sf.shape)
     indicator[np.arange(sf.shape[0]), target_index] = 1     # 1(y)
-    dprediction = (sf - indicator) / predictions.shape[0]   # dL/dZ = (S - 1(y)) / N
+    dprediction = (sf - indicator) / p.shape[0]   # dL/dZ = (S - 1(y)) / N
 
     if single:
         dprediction = dprediction.reshape(dprediction.size)
